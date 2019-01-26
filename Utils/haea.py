@@ -152,7 +152,7 @@ class HAEA():
 	def euclideanDistance( self, individual1, individual2 ):
 		return numpy.linalg.norm( individual1 - individual2 )
 
-	def dcBest( self, offspring, individual ):
+	def dcBest( self, offspring, individual, type = None ):
 		total = len( offspring )
 		best = offspring[0]
 		minDistance = self.euclideanDistance( offspring[0].chromosome, individual.chromosome )
@@ -163,7 +163,10 @@ class HAEA():
 				best = offspring[i]
 				minDistance = distance
 
+		distance = self.euclideanDistance( individual.chromosome, best.chromosome )
 		if individual.fitness > best.fitness:
+			best = individual
+		if type == "R" and distance > 0.1:
 			best = individual
 
 		return best
@@ -227,7 +230,7 @@ class HAEA():
 
 		return data
 
-	def realDCInit( self, generations, selection ):
+	def realDCInit( self, generations, selection, type = None ):
 		# Create initial population
 		self.dcCreatePopulation()
 
@@ -249,7 +252,7 @@ class HAEA():
 				offspring = self.dcApplyOperator( operator, parents )
 
 				# Choose the best individual
-				child = self.dcBest( offspring, individual )
+				child = self.dcBest( offspring, individual, type )
 
 				# Recalculate operator rates
 				self.recalculateRates( operator, child, individual )
