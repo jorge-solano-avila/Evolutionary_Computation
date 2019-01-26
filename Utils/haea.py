@@ -1,9 +1,9 @@
 from random import randint, random, randrange
 import numpy
 
-from constants import CROSSOVER_OPERATOR, MUTATION_OPERATOR, PROPORTIONAL_SELECTION, RANK_SELECTION, TOURNAMENT_SELECTION, ELITIST_SELECTION, RANDOM_SELECTION
-from individual import Individual
-from selections import proportional, rank, tournament, elitist, randomSelection
+from Utils.constants import CROSSOVER_OPERATOR, MUTATION_OPERATOR, PROPORTIONAL_SELECTION, RANK_SELECTION, TOURNAMENT_SELECTION, ELITIST_SELECTION, RANDOM_SELECTION
+from Utils.individual import Individual
+from Utils.selections import proportional, rank, tournament, elitist, randomSelection
 
 class HAEA():
 	def __init__( self, function, chromosomeLength, populationLength ):
@@ -227,7 +227,7 @@ class HAEA():
 
 		return data
 
-	def dcInit( self, generations, selection ):
+	def realDCInit( self, generations, selection ):
 		# Create initial population
 		self.dcCreatePopulation()
 
