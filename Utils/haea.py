@@ -1,9 +1,15 @@
 from random import randint, random, randrange
+
 import numpy
 
-from Utils.constants import CROSSOVER_OPERATOR, MUTATION_OPERATOR, PROPORTIONAL_SELECTION, RANK_SELECTION, TOURNAMENT_SELECTION, ELITIST_SELECTION, RANDOM_SELECTION
+from Utils.constants import (CROSSOVER_OPERATOR, ELITIST_SELECTION,
+                             MUTATION_OPERATOR, PROPORTIONAL_SELECTION,
+                             RANDOM_SELECTION, RANK_SELECTION,
+                             TOURNAMENT_SELECTION)
 from Utils.individual import Individual
-from Utils.selections import proportional, rank, tournament, elitist, randomSelection
+from Utils.selections import (elitist, proportional, randomSelection, rank,
+                              tournament)
+
 
 class HAEA():
 	def __init__( self, function, chromosomeLength, populationLength ):
@@ -202,7 +208,7 @@ class HAEA():
 		data = []
 
 		# Generations
-		for i in range( generations ):
+		for _ in range( generations ):
 			newPopulation = []
 			for individual in self.population:
 				# Select operator to apply
