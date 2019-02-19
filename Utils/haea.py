@@ -115,17 +115,20 @@ class HAEA():
 
 		return MUTATION_OPERATOR
 
-	def selectParents( self, selection ):
-		if selection == PROPORTIONAL_SELECTION:
-			parents = proportional( self.population, 1 )
-		elif selection == RANK_SELECTION:
-			parents = rank( self.population, 1 )
-		elif selection == TOURNAMENT_SELECTION:
-			parents = tournament( self.population, 1 )
-		elif selection == RANDOM_SELECTION:
+	def selectParents( self, selection, type = None ):
+		if type != "M":
+			if selection == PROPORTIONAL_SELECTION:
+				parents = proportional( self.population, 1 )
+			elif selection == RANK_SELECTION:
+				parents = rank( self.population, 1 )
+			elif selection == TOURNAMENT_SELECTION:
+				parents = tournament( self.population, 1 )
+			elif selection == RANDOM_SELECTION:
+				parents = randomSelection( self.population, 1 )
+			else: # selection == ELITIST_SELECTION
+				parents = elitist( self.population, 1 )
+		else:
 			parents = randomSelection( self.population, 1 )
-		else: # selection == ELITIST_SELECTION
-			parents = elitist( self.population, 1 )
 
 		return parents
 
@@ -251,7 +254,7 @@ class HAEA():
 
 				# Apply operator
 				if operator == CROSSOVER_OPERATOR:
-					parents = self.selectParents( selection )
+					parents = self.selectParents( selection, type )
 					parents = [parents[randint( 0, len( parents ) - 1 )]] + [individual]
 				else: # operator == MUTATION_OPERATOR
 					parents = [individual]
