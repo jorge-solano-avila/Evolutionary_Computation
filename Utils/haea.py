@@ -1,9 +1,15 @@
 from random import randint, random, randrange
+
 import numpy
 
-from Utils.constants import CROSSOVER_OPERATOR, MUTATION_OPERATOR, PROPORTIONAL_SELECTION, RANK_SELECTION, TOURNAMENT_SELECTION, ELITIST_SELECTION, RANDOM_SELECTION
+from Utils.constants import (CROSSOVER_OPERATOR, ELITIST_SELECTION,
+                             MUTATION_OPERATOR, PROPORTIONAL_SELECTION,
+                             RANDOM_SELECTION, RANK_SELECTION,
+                             TOURNAMENT_SELECTION)
 from Utils.individual import Individual
-from Utils.selections import proportional, rank, tournament, elitist, randomSelection
+from Utils.selections import (elitist, proportional, randomSelection, rank,
+                              tournament)
+
 
 class HAEA():
 	def __init__( self, function, chromosomeLength, populationLength ):
@@ -109,17 +115,20 @@ class HAEA():
 
 		return MUTATION_OPERATOR
 
-	def selectParents( self, selection ):
-		if selection == PROPORTIONAL_SELECTION:
-			parents = proportional( self.population, 1 )
-		elif selection == RANK_SELECTION:
-			parents = rank( self.population, 1 )
-		elif selection == TOURNAMENT_SELECTION:
-			parents = tournament( self.population, 1 )
-		elif selection == RANDOM_SELECTION:
+	def selectParents( self, selection, type = None ):
+		if type != "M":
+			if selection == PROPORTIONAL_SELECTION:
+				parents = proportional( self.population, 1 )
+			elif selection == RANK_SELECTION:
+				parents = rank( self.population, 1 )
+			elif selection == TOURNAMENT_SELECTION:
+				parents = tournament( self.population, 1 )
+			elif selection == RANDOM_SELECTION:
+				parents = randomSelection( self.population, 1 )
+			else: # selection == ELITIST_SELECTION
+				parents = elitist( self.population, 1 )
+		else:
 			parents = randomSelection( self.population, 1 )
-		else: # selection == ELITIST_SELECTION
-			parents = elitist( self.population, 1 )
 
 		return parents
 
@@ -202,7 +211,7 @@ class HAEA():
 		data = []
 
 		# Generations
-		for i in range( generations ):
+		for _ in range( generations ):
 			newPopulation = []
 			for individual in self.population:
 				# Select operator to apply
@@ -245,7 +254,7 @@ class HAEA():
 
 				# Apply operator
 				if operator == CROSSOVER_OPERATOR:
-					parents = self.selectParents( selection )
+					parents = self.selectParents( selection, type )
 					parents = [parents[randint( 0, len( parents ) - 1 )]] + [individual]
 				else: # operator == MUTATION_OPERATOR
 					parents = [individual]

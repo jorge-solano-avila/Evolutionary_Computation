@@ -55,4 +55,4 @@ def elitist( population, parentsLength ):
 	return sorted( population, key = lambda individual: individual.fitness, reverse = True )[:parentsLength]
 
 def randomSelection( population, parentsLength ):
-	return numpy.random.choice( population, parentsLength )
+	return numpy.array( numpy.random.choice( population, parentsLength ) )
